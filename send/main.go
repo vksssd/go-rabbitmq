@@ -1,4 +1,4 @@
-package send
+package main
 
 import (
 	"log"
@@ -13,7 +13,7 @@ func onFailError(err error, msg string) {
 	}
 }
 
-func init() {
+func main() {
 	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
 	onFailError(err, "Failed to connect to RabbitMQ")
 	defer conn.Close()

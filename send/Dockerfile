@@ -20,5 +20,5 @@ EXPOSE 8080
 RUN chmod +x send
 
 
-CMD ["go","run","send.go"]
+CMD ["./send"]
 
