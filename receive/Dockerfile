@@ -18,4 +18,4 @@ COPY --from=builder /app/receive .
 
 EXPOSE 8080
 
-CMD ["./receive"]
+CMD ["go run receive.go"]

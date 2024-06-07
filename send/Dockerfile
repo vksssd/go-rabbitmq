@@ -16,5 +16,5 @@ COPY --from=builder /app/send .
 
 EXPOSE 8080
 
-CMD ["./send"]
+CMD ["go run send.go"]
 
