@@ -1,0 +1,2 @@
+# go-rabbitmq
+practicing rabbitmq 
