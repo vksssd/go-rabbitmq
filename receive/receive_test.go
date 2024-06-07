@@ -29,7 +29,7 @@ func TestReceive(t *testing.T){
 	onFailError(err, "Failed to declare a queue")
 	}
 
-	body:="Test Case!"
+	body:="Test Message!"
 	err = ch.Publish(
 		"",   //exchange
 		q.Name, // routing key
