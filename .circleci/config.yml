@@ -43,7 +43,8 @@ jobs:
           command: |
             cd send
             go build -o send .
-            chmod +x send
+            chmod +x send 
+          
       - run:
           name: Build and push producer to Docker
           command: |
