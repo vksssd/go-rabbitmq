@@ -9,6 +9,8 @@ executors:
 jobs:
   build-test-producer:
     executor: docker-executor
+    services:
+      - rabbitmq
     steps:
       - checkout
 
@@ -36,6 +38,8 @@ jobs:
   
   build-test-consumer:
     executor: docker-executor
+    services:
+      - rabbitmq
     steps:
       - checkout
       - run:
