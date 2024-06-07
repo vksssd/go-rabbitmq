@@ -27,8 +27,8 @@ jobs:
           command: |
             curl -sSL https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz | sudo tar -C /usr/local/bin -xzv
       - run:
-        name: Wait for 60 seconds
-        command: sleep 60
+          name: Wait for 60 seconds
+          command: sleep 60
 
       - run:
           name: Wait for RabbitMQ to be ready
@@ -67,8 +67,8 @@ jobs:
             curl -sSL https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz | sudo tar -C /usr/local/bin -xzv
 
       - run:
-        name: Wait for 60 seconds
-        command: sleep 60
+          name: Wait for 60 seconds
+          command: sleep 60
 
       - run:
           name: Wait for RabbitMQ to be ready
