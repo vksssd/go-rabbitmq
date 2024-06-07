@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 RUN go mod tidy 
-RUN go build -o send .
+RUN go build -o send main.go
 RUN chmod +x send
 
 

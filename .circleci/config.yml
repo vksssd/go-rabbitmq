@@ -39,7 +39,7 @@ jobs:
           name: Build producer
           command: |
             cd send
-            go build -o send .
+            go build -o send main.go
             chmod +x send 
           
       - run:
@@ -93,7 +93,7 @@ jobs:
           name: Build consumer
           command: |
             cd receive
-            go build -o receive .            
+            go build -o receive main.go           
             chmod +x receive
 
       # - run:
