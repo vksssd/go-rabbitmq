@@ -1,4 +1,4 @@
-package receive
+package main
 
 import (
 	"log"
