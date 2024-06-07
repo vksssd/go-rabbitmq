@@ -54,11 +54,11 @@ jobs:
             docker tag vksssd/rabbitmq-producer:$TAG vksssd/rabbitmq-producer:latest
             docker push vksssd/rabbitmq-producer:latest
 
-      # - run:
-      #     name: Test producer
-      #     command: |
-      #       cd send
-      #       go test -v
+      - run:
+          name: Test producer
+          command: |
+            cd send
+            go test -v
 
   build-test-consumer:
     executor: docker-executor
@@ -99,11 +99,11 @@ jobs:
             cd receive
             go build -o receive .
 
-      # - run:
-      #     name: Test consumer
-      #     command: |
-      #       cd receive
-      #       go test -v
+      - run:
+          name: Test consumer
+          command: |
+            cd receive
+            go test -v
 
       - run:
           name: Build and push consumer to Docker
