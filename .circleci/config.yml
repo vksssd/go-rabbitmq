@@ -39,6 +39,16 @@ jobs:
           command: |
             cd send
             go build -o send .
+      - run:
+          name: Build and push producer to Docker
+          command: |
+            cd send
+            TAG=$(echo $CIRCLE_SHA1 | cut -c1-7)
+            docker build -t vksssd/rabbitmq-producer:$TAG .
+            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+            docker push vksssd/rabbitmq-producer:$TAG
+            docker tag vksssd/rabbitmq-producer:$TAG vksssd/rabbitmq-producer:latest
+            docker push vksssd/rabbitmq-producer:latest
 
       # - run:
       #     name: Test producer
@@ -86,6 +96,18 @@ jobs:
       #       cd receive
       #       go test -v
 
+      - run:
+          name: Build and push consumer to Docker
+          command: |
+            cd receive
+            TAG=$(echo $CIRCLE_SHA1 | cut -c1-7)
+            docker build -t vksssd/rabbitmq-consumer:$TAG .
+            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+            docker push vksssd/rabbitmq-consumer:$TAG
+            docker tag vksssd/rabbitmq-consumer:$TAG vksssd/rabbitmq-consumer:latest
+            docker push vksssd/rabbitmq-consumer:latest
+
+
   docker-publish:
     docker:
       - image: circleci/docker:stable
@@ -130,7 +152,7 @@ workflows:
     jobs:
       - build-test-producer
       - build-test-consumer
-      - docker-publish:
-          requires:
-            - build-test-producer
-            - build-test-consumer
+      # - docker-publish:
+      #     requires:
+      #       - build-test-producer
+      #       - build-test-consumer
