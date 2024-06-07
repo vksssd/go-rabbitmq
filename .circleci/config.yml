@@ -11,6 +11,12 @@ jobs:
     executor: docker-executor
     steps:
       - checkout
+
+      - run:
+          name: Install Dockerize
+          command: |
+            curl -sSL https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz | sudo tar -C /usr/local/bin -xzv
+     
       - run:
           name: Wait for RabbitMQ to be ready
           command: |
@@ -32,6 +38,11 @@ jobs:
     executor: docker-executor
     steps:
       - checkout
+      - run:
+          name: Install Dockerize
+          command: |
+            curl -sSL https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz | sudo tar -C /usr/local/bin -xzv
+     
       - run:
           name: Wait for RabbitMQ to be ready
           command: |
