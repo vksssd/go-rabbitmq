@@ -1,5 +1,5 @@
 module github.com/vksssd/go-rabbitmq/receive
 
-go 1.21.3
+go 1.16
 
 require github.com/streadway/amqp v1.1.0
