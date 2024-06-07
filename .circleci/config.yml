@@ -4,8 +4,8 @@ executors:
   docker-executor:
     docker:
       - image: circleci/golang:1.16
-      # - image: rabbitmq
-      #   name: rabbitmq
+      - image: rabbitmq
+        name: rabbitmq
     working_directory: /go/src/github.com/vksssd/go-rabbitmq
 
 jobs:
