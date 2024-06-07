@@ -10,8 +10,12 @@ executors:
 
 jobs:
   build-test-producer:
-    executor: docker-executor
-    
+    # executor: docker-executor
+    docker:
+      - image: circleci/golang:1.16
+        name: golang
+      - image: rabbitmq:3-management
+        name: rabbitmq
     steps:
       - checkout
       - run:
@@ -40,9 +44,14 @@ jobs:
             go test -v
 
   build-test-consumer:
-    executor: docker-executor
+    # executor: docker-executor
     # services:
     #   - rabbitmq
+    docker:
+      - image: circleci/golang:1.16
+        name: golang
+      - image: rabbitmq:3-management
+        name: rabbitmq
     steps:
       - checkout
       - run:
