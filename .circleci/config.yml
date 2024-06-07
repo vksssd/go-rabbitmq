@@ -43,7 +43,7 @@ jobs:
           command: |
             cd send
             go build -o send .
-            chmod +x ./send
+            chmod +x send
       - run:
           name: Build and push producer to Docker
           command: |
@@ -99,7 +99,7 @@ jobs:
           command: |
             cd receive
             go build -o receive .            
-            chmod +x ./receive
+            chmod +x receive
 
       # - run:
       #     name: Test consumer

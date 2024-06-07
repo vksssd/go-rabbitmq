@@ -20,5 +20,4 @@ EXPOSE 8080
 
 RUN chmod +x receive
 
-
 CMD ["./receive"]
