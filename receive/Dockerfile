@@ -3,7 +3,7 @@ FROM golang:1.16 AS builder
 WORKDIR /app
 COPY . . 
 RUN go mod tidy
-RUN go build -o receive .
+RUN go build -o receive main.go
 RUN chmod +x receive
 
 RUN CGO_ENABLED=0 GOOS=linux go build -o receive main.go
