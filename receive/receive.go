@@ -14,7 +14,7 @@ func onFailError(err error, msg string) {
 	}
 }
 
-func init(){
+func main(){
 	conn , err := amqp.Dial("amqp://guest:guest@localhost:5672/")
 	if err != nil {
 		onFailError(err, "Failed to connect to RabbitMQ")
