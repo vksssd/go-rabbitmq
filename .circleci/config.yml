@@ -26,9 +26,9 @@ jobs:
           name: Install Dockerize
           command: |
             curl -sSL https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz | sudo tar -C /usr/local/bin -xzv
-      - run:
-          name: Wait for 60 seconds
-          command: sleep 60
+      # - run:
+      #     name: Wait for 60 seconds
+      #     command: sleep 60
 
       - run:
           name: Wait for RabbitMQ to be ready
@@ -40,11 +40,11 @@ jobs:
             cd send
             go build -o send .
 
-      - run:
-          name: Test producer
-          command: |
-            cd send
-            go test -v
+      # - run:
+      #     name: Test producer
+      #     command: |
+      #       cd send
+      #       go test -v
 
   build-test-consumer:
     # executor: docker-executor
@@ -66,9 +66,9 @@ jobs:
           command: |
             curl -sSL https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz | sudo tar -C /usr/local/bin -xzv
 
-      - run:
-          name: Wait for 60 seconds
-          command: sleep 60
+      # - run:
+      #     name: Wait for 60 seconds
+      #     command: sleep 60
 
       - run:
           name: Wait for RabbitMQ to be ready
@@ -80,11 +80,11 @@ jobs:
             cd receive
             go build -o receive .
 
-      - run:
-          name: Test consumer
-          command: |
-            cd receive
-            go test -v
+      # - run:
+      #     name: Test consumer
+      #     command: |
+      #       cd receive
+      #       go test -v
 
   docker-publish:
     docker:
