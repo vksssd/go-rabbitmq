@@ -1,0 +1,102 @@
+version: 2.1
+
+executors:
+  docker-executor:
+    docker:
+      - image: circleci/golang:1.16
+    working_directory: /go/src/github.com/vksssd/go-rabbitmq
+
+jobs:
+  build-test-producer:
+    executor: docker-executor
+    steps:
+      - setup_remote_docker:
+        version: 20.10.7
+        docker_layer_caching: true
+      
+      - checkout
+      - run:
+          name: Wait for RabbitMQ to be ready
+          command: |
+            dockerize -wait tcp://rabbitmq:5672 -timeout 30s
+      
+      - run:
+        name: Build producer
+        command: |
+          cd send
+          go build -o send .
+      
+      - run:
+        name: test producer
+        command: |
+          cd send
+          go test -v
+  
+  build-test-consumer:
+    executor: docker-executor
+    steps:
+      - setup_remote_docker:
+        version: 20.10.7
+        docker_layer_caching: true
+
+      - checkout
+      - run:
+          name: Wait for RabbitMQ to be ready
+          command: |
+            dockerize -wait tcp://rabbitmq:5672 -timeout 30s
+      
+      - run:
+        name: Build consumer
+        command: |
+          cd receive
+          go build -o receive .
+      - run:
+        name: test consumer
+        command: |
+          cd receive
+          go test -v
+  
+  docker-publish:
+    docker: 
+      -image: circleci/docker:stable
+    steps:
+      - setup_remote_docker:
+        version: 20.10.7
+      
+      - checkout
+      - run:
+        name: Build and push publisher to docker
+        command: |
+          cd send
+          TAG =$(echo $CIRCLE_SHA1 | cut -c1-7)
+          docker build -t vksssd/rabbitmq-producer:$TAG
+          docker login -u $DOCKER_USER -p $DOCKER_PASS
+          docker push vksssd/rabbitmq-producer:$TAG
+          docker tag vksssd/rabbitmq-producer:$TAG vksssd/rabbitmq-producer:latest
+          docker push vksssd/rabbitmq-producer:latest
+      - run:
+        name: Build and push consumer to docker
+        command: |
+          cd send
+          TAG =$(echo $CIRCLE_SHA1 | cut -c1-7)
+          docker build -t vksssd/rabbitmq-consumer:$TAG
+          docker login -u $DOCKER_USER -p $DOCKER_PASS
+          docker push vksssd/rabbitmq-consumer:$TAG
+          docker tag vksssd/rabbitmq-consumer:$TAG vksssd/rabbitmq-consumer:latest
+          docker push vksssd/rabbitmq-consumer:latest
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672
+      - 15672:15672         
+
+workflow:
+  version: 2
+  build-test-publish:
+    jobs:
+      - build-test-producer
+      - build-test-consumer
+      - docker-publish:
+        needs: [build-test-producer, build-test-consumer]
