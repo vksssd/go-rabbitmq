@@ -23,4 +23,4 @@ EXPOSE 8080
 
 RUN chmod +x receive
 
-CMD ["./receive"]
+CMD ["go","run","receive.go"]
